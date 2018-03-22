@@ -1,0 +1,230 @@
+{
+  "Version": "0.0.1",
+  "Generator": "holochain 22",
+  "DNA": {
+    "Version": 1,
+    "UUID": "190b162a-2c8f-11e8-83e8-a4b197fffe0a",
+    "Name": "testapp",
+    "Properties": {
+      "description": "provides an application template",
+      "language": "en"
+    },
+    "PropertiesSchema": "{\n\t\"title\": \"Properties Schema\",\n\t\"type\": \"object\",\n\t\"properties\": {\n\t\t\"description\": {\n\t\t\t\"type\": \"string\"\n\t\t},\n\t\t\"language\": {\n\t\t\t\"type\": \"string\"\n\t\t}\n\t}\n}\n",
+    "AgentIdentitySchema": "",
+    "BasedOn": {
+      "H": null
+    },
+    "RequiresVersion": 22,
+    "DHTConfig": {
+      "HashType": "sha2-256",
+      "NeighborhoodSize": 0
+    },
+    "Progenitor": {
+      "Identity": "",
+      "PubKey": null
+    },
+    "Zomes": [
+      {
+        "Name": "wsTest",
+        "Description": "provide a sample zome",
+        "Code": "'use strict';\n\nfunction signWrapped(input) {\n  input = JSON.parse(input)\n  return JSON.stringify(sign(input))\n}\n\nfunction commitWrapped(input) {\n  input = JSON.parse(input)\n  var hash = commit(\"abstract\", input)\n  commit(\"links\", {\n    Links: [\n      { Base: App.DNA.Hash, Link: hash, Tag: \"entry\"}\n    ]\n  })\n  return JSON.stringify(hash)\n}\n\nfunction removeWrapped(input) {\n  input = JSON.parse(input)\n  return JSON.stringify(remove(input.hash, input.message))\n}\n\nfunction getWrapped(input) {\n  input = JSON.parse(input)\n  return JSON.stringify(get(input))\n}\n\nfunction getAll() {\n  return getLinks(App.DNA.Hash, \"entry\", {Load: true})\n}\n\nfunction genesis() {\n  return true;\n}\n\nfunction validateCommit (entryName, entry, header, pkg, sources) {\n  switch (entryName) {\n    case \"links\":\n    case \"abstract\":\n      return true;\n    default:\n      // invalid entry name\n      return false;\n  }\n}\n\nfunction validatePut (entryName, entry, header, pkg, sources) {\n  switch (entryName) {\n    case \"links\":\n    case \"abstract\":\n      return true;\n    default:\n      // invalid entry name\n      return false;\n  }\n}\n\nfunction validateMod (entryName, entry, header, replaces, pkg, sources) {\n  switch (entryName) {\n    case \"abstract\":\n      return true;\n    default:\n      // invalid entry name\n      return false;\n  }\n}\n\nfunction validateDel (entryName, hash, pkg, sources) {\n  switch (entryName) {\n    case \"abstract\":\n      return true;\n    default:\n      // invalid entry name\n      return false;\n  }\n}\n\nfunction validateLink (entryName, baseHash, links, package, sources) {\n  switch (entryName) {\n    case \"links\":\n      return true;\n    default:\n      // invalid entry name\n      return false;\n  }\n}\n\nfunction validatePutPkg (entryName) {\n  return null;\n}\n\nfunction validateModPkg (entryName) {\n  return null;\n}\n\nfunction validateDelPkg (entryName) {\n  return null;\n}\n\nfunction validateLinkPkg (entryName) {\n  return null;\n}",
+        "Entries": [
+          {
+            "Name": "abstract",
+            "DataFormat": "json",
+            "Sharing": "public",
+            "Schema": "{\n\t\"title\": \"abstract Schema\",\n\t\"type\": \"object\",\n\t\"properties\": {\n\t\t\"type\": {\n\t\t\t\"type\": \"string\"\n\t\t},\n\t\t\"content\": {\n\t\t\t\"type\": \"object\"\n\t\t}\n\t},\n    \"required\": [\"type\", \"content\"]\n}"
+          },
+          {
+            "Name": "links",
+            "DataFormat": "links",
+            "Sharing": "",
+            "Schema": ""
+          }
+        ],
+        "RibosomeType": "js",
+        "Functions": [
+          {
+            "Name": "getWrapped",
+            "CallingType": "string",
+            "Exposure": "public"
+          },
+          {
+            "Name": "signWrapped",
+            "CallingType": "string",
+            "Exposure": "public"
+          },
+          {
+            "Name": "commitWrapped",
+            "CallingType": "string",
+            "Exposure": "public"
+          },
+          {
+            "Name": "removeWrapped",
+            "CallingType": "string",
+            "Exposure": "public"
+          },
+          {
+            "Name": "getAll",
+            "CallingType": "json",
+            "Exposure": "public"
+          }
+        ],
+        "BridgeFuncs": null,
+        "BridgeTo": {
+          "H": null
+        },
+        "Config": {
+          "ErrorHandling": "returnErrorValue"
+        }
+      }
+    ]
+  },
+  "TestSets": [
+    {
+      "Name": "sample",
+      "TestSet": {
+        "Tests": [
+          {
+            "Convey": "We can create a new sampleEntry",
+            "Zome": "sampleZome",
+            "FnName": "signIt",
+            "Input": "test",
+            "Output": "whatever",
+            "Err": null,
+            "ErrMsg": "",
+            "Regexp": "",
+            "Time": 0,
+            "Wait": 0,
+            "Exposure": "public",
+            "Raw": false,
+            "Repeat": 0,
+            "Benchmark": false
+          },
+          {
+            "Convey": "We can create a new sampleEntry",
+            "Zome": "sampleZome",
+            "FnName": "sampleEntryCreate",
+            "Input": {
+              "content": {
+                "key": "val"
+              },
+              "type": "message"
+            },
+            "Output": "%h1%",
+            "Err": null,
+            "ErrMsg": "",
+            "Regexp": "",
+            "Time": 0,
+            "Wait": 0,
+            "Exposure": "public",
+            "Raw": false,
+            "Repeat": 0,
+            "Benchmark": false
+          },
+          {
+            "Convey": "We can remove a new sampleEntry",
+            "Zome": "sampleZome",
+            "FnName": "sampleEntryRemove",
+            "Input": "%r1%",
+            "Output": "what",
+            "Err": null,
+            "ErrMsg": "",
+            "Regexp": "",
+            "Time": 0,
+            "Wait": 0,
+            "Exposure": "public",
+            "Raw": false,
+            "Repeat": 0,
+            "Benchmark": false
+          }
+        ],
+        "Identity": "",
+        "Fixtures": {
+          "Agents": null
+        },
+        "Benchmark": false
+      }
+    }
+  ],
+  "UI": [
+    {
+      "FileName": "hc.js",
+      "Data": "function yourApp(){alert('your UI code here!')}",
+      "Encoding": ""
+    },
+    {
+      "FileName": "index.html",
+      "Data": "\u003chtml\u003e\u003cbody\u003eYour UI here!\u003c/body\u003e\u003c/html\u003e",
+      "Encoding": ""
+    }
+  ],
+  "Scenarios": [
+    {
+      "Name": "sampleScenario",
+      "Roles": [
+        {
+          "Name": "listener",
+          "TestSet": {
+            "Tests": [
+              {
+                "Convey": "add listener test here",
+                "Zome": "",
+                "FnName": "",
+                "Input": null,
+                "Output": null,
+                "Err": null,
+                "ErrMsg": "",
+                "Regexp": "",
+                "Time": 0,
+                "Wait": 0,
+                "Exposure": "",
+                "Raw": false,
+                "Repeat": 0,
+                "Benchmark": false
+              }
+            ],
+            "Identity": "",
+            "Fixtures": {
+              "Agents": null
+            },
+            "Benchmark": false
+          }
+        },
+        {
+          "Name": "speaker",
+          "TestSet": {
+            "Tests": [
+              {
+                "Convey": "add speaker test here",
+                "Zome": "",
+                "FnName": "",
+                "Input": null,
+                "Output": null,
+                "Err": null,
+                "ErrMsg": "",
+                "Regexp": "",
+                "Time": 0,
+                "Wait": 0,
+                "Exposure": "",
+                "Raw": false,
+                "Repeat": 0,
+                "Benchmark": false
+              }
+            ],
+            "Identity": "",
+            "Fixtures": {
+              "Agents": null
+            },
+            "Benchmark": false
+          }
+        }
+      ],
+      "Config": {
+        "GossipInterval": 100,
+        "Duration": 5,
+        "Clone": null
+      }
+    }
+  ]
+}
