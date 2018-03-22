@@ -1,0 +1,13 @@
+{
+	"title": "abstract Schema",
+	"type": "object",
+	"properties": {
+		"type": {
+			"type": "string"
+		},
+		"content": {
+			"type": "object"
+		}
+	},
+    "required": ["type", "content"]
+}

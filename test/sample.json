@@ -1,0 +1,62 @@
+{
+    "Tests": [
+        {
+            "Convey": "We can create a new sampleEntry",
+            "Zome": "sampleZome",
+            "FnName": "signIt",
+            "Input": "test",
+            "Output": "whatever",
+            "Err": null,
+            "ErrMsg": "",
+            "Regexp": "",
+            "Time": 0,
+            "Wait": 0,
+            "Exposure": "public",
+            "Raw": false,
+            "Repeat": 0,
+            "Benchmark": false
+        },
+        {
+            "Convey": "We can create a new sampleEntry",
+            "Zome": "sampleZome",
+            "FnName": "sampleEntryCreate",
+            "Input": {
+                "type": "message",
+                "content": {
+                    "key": "val"
+                }
+            },
+            "Output": "%h1%",
+            "Err": null,
+            "ErrMsg": "",
+            "Regexp": "",
+            "Time": 0,
+            "Wait": 0,
+            "Exposure": "public",
+            "Raw": false,
+            "Repeat": 0,
+            "Benchmark": false
+        },
+        {
+            "Convey": "We can remove a new sampleEntry",
+            "Zome": "sampleZome",
+            "FnName": "sampleEntryRemove",
+            "Input": "%r1%",
+            "Output": "what",
+            "Err": null,
+            "ErrMsg": "",
+            "Regexp": "",
+            "Time": 0,
+            "Wait": 0,
+            "Exposure": "public",
+            "Raw": false,
+            "Repeat": 0,
+            "Benchmark": false
+        }
+    ],
+    "Identity": "",
+    "Fixtures": {
+        "Agents": null
+    },
+    "Benchmark": false
+}

@@ -1,0 +1,74 @@
+{
+    "Version": 1,
+    "UUID": "190b162a-2c8f-11e8-83e8-a4b197fffe0a",
+    "Name": "testapp",
+    "Properties": {
+        "description": "provides an application template",
+        "language": "en"
+    },
+    "PropertiesSchemaFile": "properties_schema.json",
+    "BasedOn": {
+        "H": null
+    },
+    "RequiresVersion": 22,
+    "DHTConfig": {
+        "HashType": "sha2-256",
+        "NeighborhoodSize": 0
+    },
+    "Progenitor": {
+        "Identity": "",
+        "PubKey": null
+    },
+    "Zomes": [
+        {
+            "Name": "wsTest",
+            "Description": "provide a sample zome",
+            "CodeFile": "wsTest.js",
+            "RibosomeType": "js",
+            "BridgeFuncs": null,
+            "BridgeTo": "",
+            "Config": {
+                "ErrorHandling": "returnErrorValue"
+            },
+            "Entries": [
+                {
+                    "Name": "abstract",
+                    "DataFormat": "json",
+                    "SchemaFile": "abstract.json",
+                    "Sharing": "public"
+                },
+                {
+                    "Name": "links",
+                    "DataFormat": "links"
+                }
+            ],
+            "Functions": [
+                {
+                    "Name": "getWrapped",
+                    "CallingType": "string",
+                    "Exposure": "public"
+                },
+                {
+                    "Name": "signWrapped",
+                    "CallingType": "string",
+                    "Exposure": "public"
+                },
+                {
+                    "Name": "commitWrapped",
+                    "CallingType": "string",
+                    "Exposure": "public"
+                },
+                {
+                    "Name": "removeWrapped",
+                    "CallingType": "string",
+                    "Exposure": "public"
+                },
+                {
+                    "Name": "getAll",
+                    "CallingType": "json",
+                    "Exposure": "public"
+                }
+            ]
+        }
+    ]
+}
